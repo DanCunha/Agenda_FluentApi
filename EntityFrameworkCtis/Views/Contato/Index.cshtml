@@ -1,0 +1,39 @@
+﻿@model IList<EntityFrameworkCtis.Models.Contato>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Contatos</h2>
+
+<p>
+    <a href="@Url.Action("Create", "Contato")" style="font-weight:bold"><i class="glyphicon glyphicon-plus" title="Cadastrar Contato"></i> Cadastrar Contato</a>
+</p>
+
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Telefone</th>
+                <th>Data de Nascimento</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var contato in Model)
+            {
+                <tr>
+                    <td>@contato.ContatoId</td>
+                    <td>@contato.Nome</td>
+                    <td>@contato.email</td>
+                    <td>@contato.Telefone</td>
+                    <td>@contato.DataNascimento</td>
+                    <td>@Html.ActionLink("Editar", "Edit", new { id = contato.ContatoId })</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

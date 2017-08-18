@@ -37,8 +37,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.DataNascimento, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.DataNascimento, new { htmlAttributes = new { @class = "form-control" } })
-                @*@Html.ValidationMessageFor(model => model.DataNascimento, "", new { @class = "text-danger" })*@
+                @Html.EditorFor(model => model.DataNascimento, new { htmlAttributes = new { @class = "form-control", id = "datanasc" } })
+                @Html.ValidationMessageFor(model => model.DataNascimento, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -47,16 +47,9 @@
                 <input type="submit" value="Atualizar" class="btn btn-primary" />
             </div>
         </div>
-
+        <hr />
         <table>
             <tr>
-                @*<td>
-                    <div class="box-footer">
-                        <div class="col-md-offset-2 col-md-10">
-                            <input type="submit" value="Salvar" class="btn btn-primary" />
-                        </div>
-                    </div>
-                </td>*@
                 <td style="padding-left:15px">
                     <a href="@Url.Action("Create", "Endereco", new { id = Model.ContatoId })" class="btn btn-primary" style="font-weight:bold"><i class="glyphicon glyphicon-plus" title="Adicionar Endereço"></i> Adicionar Endereço</a>
                 </td>

@@ -18,11 +18,6 @@ namespace EntityFrameworkCtis.Controllers
         {
             List<Contato> contatos = db.Contato.Include("Enderecos").ToList();
 
-            //foreach(var lista in contatos)
-            //{
-
-            //}
-
             return View(contatos);
         }
 
@@ -42,6 +37,12 @@ namespace EntityFrameworkCtis.Controllers
         [HttpPost]
         public ActionResult Create(Contato contato)
         {
+            if (contato.DataNascimento.ToString() == "01/01/0001 00:00:00")
+            {
+                this.ModelState.AddModelError("DataNascimento", "Data Inválida");
+                return View(contato);
+            }
+
             try
             {
                 db.Contato.Add(contato);
@@ -53,7 +54,7 @@ namespace EntityFrameworkCtis.Controllers
             {
                 var error = ex.EntityValidationErrors.First().ValidationErrors.First();
                 this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-                return View();
+                return View(contato);
             }
         }
 
@@ -61,6 +62,10 @@ namespace EntityFrameworkCtis.Controllers
         public ActionResult Edit(int id)
         {
             Contato contato = db.Contato.Include("Enderecos").Where(x => x.ContatoId == id).FirstOrDefault();
+
+            ViewBag.ContatoId = contato.ContatoId;
+            ViewBag.Enderecos = contato.Enderecos;
+
             return View(contato);
         }
 
@@ -68,14 +73,19 @@ namespace EntityFrameworkCtis.Controllers
         [HttpPost]
         public ActionResult Edit(Contato model)
         {
-            try
+            Contato contato = db.Contato.Include("Enderecos").Where(x => x.ContatoId == model.ContatoId).FirstOrDefault();
+            contato.Nome = model.Nome;
+            contato.Telefone = model.Telefone;
+            contato.email = model.email;
+            if(model.DataNascimento.ToString() == "01/01/0001 00:00:00")
             {
-                Contato contato = db.Contato.Find(model.ContatoId);
-                contato.Nome = model.Nome;
-                contato.Telefone = model.Telefone;
-                contato.email = model.email;
-                contato.DataNascimento = model.DataNascimento;
+                this.ModelState.AddModelError("DataNascimento", "Data Inválida");
+                return View(contato);
+            }
+            contato.DataNascimento = model.DataNascimento;
 
+            try
+            { 
                 db.Entry(contato).State = EntityState.Modified;
                 db.SaveChanges();
 
@@ -85,7 +95,7 @@ namespace EntityFrameworkCtis.Controllers
             {
                 var error = ex.EntityValidationErrors.First().ValidationErrors.First();
                 this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-                return View();
+                return View(contato);
             }
         }
 

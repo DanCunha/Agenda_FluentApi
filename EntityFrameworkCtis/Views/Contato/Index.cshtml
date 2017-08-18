@@ -31,7 +31,9 @@
                     <td>@contato.email</td>
                     <td>@contato.Telefone</td>
                     <td>@contato.DataNascimento</td>
-                    <td>@Html.ActionLink("Editar", "Edit", new { id = contato.ContatoId })</td>
+                    <td>
+                        <a href="@Url.Action("Edit", "Contato", new { id = contato.ContatoId })" style="font-weight:bold"><i class="glyphicon glyphicon-edit" ></i> Editar</a>
+                    </td>
                 </tr>
             }
         </tbody>

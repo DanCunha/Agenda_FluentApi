@@ -53,7 +53,7 @@ namespace EntityFrameworkCtis.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "EnderecoId,Rua,Numero,Complemento,Bairro,Cidade,Estado,CEP,ContatoId")] Endereco endereco)
+        public ActionResult Create(Endereco endereco)
         {
             try
             {
@@ -65,7 +65,7 @@ namespace EntityFrameworkCtis.Controllers
             {
                 var error = ex.EntityValidationErrors.First().ValidationErrors.First();
                 this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-                return View();
+                return View(endereco);
             }
         }
 
@@ -102,7 +102,7 @@ namespace EntityFrameworkCtis.Controllers
             {
                 var error = ex.EntityValidationErrors.First().ValidationErrors.First();
                 this.ModelState.AddModelError(error.PropertyName, error.ErrorMessage);
-                return View();
+                return View(endereco);
             }
         }
 
